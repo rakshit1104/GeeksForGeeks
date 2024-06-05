@@ -55,21 +55,36 @@ class Solution
     public static ArrayList<Integer> findUnion(int arr1[], int arr2[], int n, int m)
     {
         // add your code here
-        HashSet<Integer>hs=new HashSet<>();
+        int i = 0, j = 0; // pointers
+        ArrayList<Integer > Union=new ArrayList<>(); // Uninon vector
         
-        for(int i=0;i<n;i++){
-          hs.add(arr1[i]);
+        while (i < n && j < m) {
+            if (arr1[i] <= arr2[j]) // Case 1 and 2
+            {
+                if (Union.size() == 0 || Union.get(Union.size()-1) != arr1[i])
+                Union.add(arr1[i]);
+                i++;
+            } else // case 3
+            {
+                if (Union.size() == 0 || Union.get(Union.size()-1) != arr2[j])
+                Union.add(arr2[j]);
+                j++;
+            }
         }
         
-         for(int i=0;i<m;i++){
-            hs.add(arr2[i]);
+        while (i < n) // IF any element left in arr1
+        {
+            if (Union.get(Union.size()-1) != arr1[i])
+            Union.add(arr1[i]);
+            i++;
         }
         
-        ArrayList<Integer> ar=new ArrayList<>(hs);
-        Collections.sort(ar);
-        return ar;
+        while (j < m) // If any elements left in arr2
+        {
+            if (Union.get(Union.size()-1) != arr2[j])
+            Union.add(arr2[j]);
+            j++;
+        }
+        return Union;
     }
 }
-
-
-
