@@ -1,8 +1,8 @@
 //{ Driver Code Starts
-//Initial Template for Java
+// Initial Template for Java
 
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
 
@@ -16,13 +16,13 @@ public class Main {
             int m = Integer.parseInt(inputLine[1]);
             int[][] arr = new int[n][m];
             inputLine = br.readLine().trim().split(" ");
-        
+
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < m; j++) {
                     arr[i][j] = Integer.parseInt(inputLine[i * m + j]);
                 }
             }
-            int ans = new Solution().rowWithMax1s(arr, n, m);
+            int ans = new Solution().rowWithMax1s(arr);
             System.out.println(ans);
         }
     }
@@ -31,37 +31,25 @@ public class Main {
 // } Driver Code Ends
 
 
-//User function Template for Java
+// User function Template for Java
 
 class Solution {
-    static int func(int[] arr){
-        int low = 0, high = arr.length-1;
-        int ans = arr.length;
-        while(low <= high){
-            int mid = (low+high)/2;
-            
-            if(arr[mid] >= 1){
-                ans = mid;
-                high = mid-1;
-            } else{
-                low = mid+1;
-            }
-        }
-        return ans;
-    }
-    
-    int rowWithMax1s(int arr[][], int n, int m) {
+    public int rowWithMax1s(int arr[][]) {
         // code here
-        int max_count = 0;
-        int index = -1;
+        int n = arr.length;
+        int m = arr[0].length;
         
-        for(int i = 0; i<n; i++){
-            int count = m - func(arr[i]);
-            if(count > max_count){
-                max_count = count;
-                index = i;
+        int maxRowIndex = -1; 
+        int j = m - 1; 
+        
+        for (int i = 0; i < n; i++) {
+            while (j >= 0 && arr[i][j] == 1) {
+                j--; 
+                maxRowIndex = i;
             }
         }
-        return index;
+        
+        return maxRowIndex;
+
     }
 }
