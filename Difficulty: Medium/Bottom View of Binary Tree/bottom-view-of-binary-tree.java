@@ -113,42 +113,37 @@ class GfG {
 
 // } Driver Code Ends
 
-class Solution{
-    class Pair{
-        int hd;
-        Node curr;
-        public Pair(Node curr, int hd){
-            this.curr = curr;
-            this.hd = hd;
+class Solution {
+    public ArrayList<Integer> bottomView(Node root) {
+        ArrayList<Integer> result = new ArrayList<>();
+        if (root == null) {
+            return result;
         }
-    }
-
-    public ArrayList <Integer> bottomView(Node root){
-        if(root==null){
-            return new ArrayList<>();
-        }
-        Queue<Pair> q = new LinkedList<>();
-        ArrayList<Integer> res = new ArrayList<>();
-        TreeMap<Integer, Integer> map = new TreeMap<>();
         
-        q.add(new Pair(root, 0));
+        Map<Integer, Integer> map = new TreeMap<>();
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+        root.hd = 0;
         
-        while(!q.isEmpty()){
-            Pair curr = q.poll();
-            int hd = curr.hd;
-            Node temp = curr.curr;
-            map.put(hd, temp.data);
-            if(temp.left!=null){
-                q.add(new Pair(temp.left, hd-1));
+        while (!queue.isEmpty()) {
+            Node temp = queue.poll();
+            map.put(temp.hd, temp.data);
+            
+            if (temp.left != null) {
+                temp.left.hd = temp.hd - 1;
+                queue.add(temp.left);
             }
-             if(temp.right!=null){
-                q.add(new Pair(temp.right, hd+1));
+            
+            if (temp.right != null) {
+                temp.right.hd = temp.hd + 1;
+                queue.add(temp.right);
             }
         }
         
-        for(Map.Entry<Integer, Integer> it : map.entrySet()){
-            res.add(it.getValue());
+        for (int value : map.values()) {
+            result.add(value);
         }
-        return res;
+        
+        return result;
     }
 }
