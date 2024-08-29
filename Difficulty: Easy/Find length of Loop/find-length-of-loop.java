@@ -1,58 +1,56 @@
 //{ Driver Code Starts
-// driver code
-
-import java.util.*;
 import java.io.*;
-import java.lang.*;
+import java.util.*;
 
-class Node
-{
+class Node {
     int data;
     Node next;
-    
-    Node(int x)
-    {
+
+    Node(int x) {
         data = x;
         next = null;
     }
 }
 
-class GFG
-{
-    public static void makeLoop(Node head, Node tail, int x){
+public class LinkedList {
+    public static void printList(Node node) {
+        while (node != null) {
+            System.out.print(node.data + " ");
+            node = node.next;
+        }
+        System.out.println();
+    }
+
+    public static void makeLoop(Node head, Node tail, int x) {
         if (x == 0) return;
-        
+
         Node curr = head;
-        for(int i=1; i<x; i++)
-            curr = curr.next;
-        
+        for (int i = 1; i < x; i++) curr = curr.next;
+
         tail.next = curr;
     }
-    
-    public static void main (String[] args){
-        Scanner sc = new Scanner(System.in);
-        int t = sc.nextInt();
-        
-        while(t--> 0)
-        {
-            int n = sc.nextInt();
-            
-            int num = sc.nextInt();
-            Node head = new Node(num);
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int t = Integer.parseInt(br.readLine());
+        while (t-- > 0) {
+            ArrayList<Integer> arr = new ArrayList<>();
+            String input = br.readLine();
+            StringTokenizer st = new StringTokenizer(input);
+            while (st.hasMoreTokens()) {
+                arr.add(Integer.parseInt(st.nextToken()));
+            }
+            int k = Integer.parseInt(br.readLine());
+            Node head = new Node(arr.get(0));
             Node tail = head;
-            
-            for(int i=0; i<n-1; i++)
-            {
-                num = sc.nextInt();
-                tail.next = new Node(num);
+            for (int i = 1; i < arr.size(); ++i) {
+                tail.next = new Node(arr.get(i));
                 tail = tail.next;
             }
-            
-            int pos = sc.nextInt();
-            makeLoop(head, tail, pos);
-            
-            Solution x = new Solution();
-            System.out.println( x.countNodesinLoop(head) );
+            makeLoop(head, tail, k);
+
+            Solution ob = new Solution();
+            System.out.println(ob.countNodesinLoop(head));
         }
     }
 }
@@ -71,33 +69,30 @@ class Node
 
 */
 
-//Function should return the length of the loop in LL.
+// Function should return the length of the loop in LL.
 
-class Solution
-{
-    //Function to find the length of a loop in the linked list.
-    static int length(Node slow, Node fast){
-        int count = 1;
-        slow = slow.next;
-        while(slow != fast){
+class Solution {
+    // Function to find the length of a loop in the linked list.
+    public int countNodesinLoop(Node head) {
+        // Add your code here.
+        Node fast= head;
+        Node slow= head;
+        
+        while(fast!=null && fast.next!=null){
+            slow= slow.next;
+            fast= fast.next.next;
+            if(slow==fast) break;
+        }
+        
+        if(fast==null || fast.next==null) return 0;
+        
+        slow= slow.next;
+        int count=1;
+        while(slow!=fast){
             count++;
-            slow = slow.next;
+            slow= slow.next;
         }
+        
         return count;
-    }
-    
-    static int countNodesinLoop(Node head)
-    {
-        //Add your code here.
-        Node slow = head;
-        Node fast = head;
-        while(fast.next != null && fast.next.next != null){
-            slow = slow.next;
-            fast = fast.next.next;
-            if(slow == fast){
-                return length(slow, fast);
-            }
-        }
-        return 0;
     }
 }
