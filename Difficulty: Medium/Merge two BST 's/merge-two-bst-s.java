@@ -108,19 +108,18 @@ class Node
 
 */
 class Solution {
-    ArrayList<Integer> a= new ArrayList<Integer>();
-    void s(Node root){
-        if(root==null)
-        return;
-        a.add(root.data);
-        s(root.left);
-        s(root.right);
-    }
     public List<Integer> merge(Node root1, Node root2) {
-        // Write your code here
-        s(root1);
-        s(root2);
-        Collections.sort(a);
-        return a; 
+        List<Integer> sortedList = new ArrayList<>();
+        inOrderTraversal(root1, sortedList);
+        inOrderTraversal(root2, sortedList);
+        sortedList.sort(Integer::compareTo);
+        return sortedList;
+    }
+    
+    private void inOrderTraversal(Node root, List<Integer> sortedList) {
+        if (root == null) return;
+        inOrderTraversal(root.left, sortedList);
+        sortedList.add(root.data);
+        inOrderTraversal(root.right, sortedList);
     }
 }
