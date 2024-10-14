@@ -1,15 +1,17 @@
 //{ Driver Code Starts
+import java.io.*;
 import java.util.*;
-class Node{
+
+class Node {
     int data;
     Node next;
-    
-    Node(int a){
+
+    Node(int a) {
         data = a;
         next = null;
     }
-    
 }
+
 
 // } Driver Code Ends
 /*Complete the function below*/
@@ -38,34 +40,31 @@ class Solution
         return count;
     }
 }
-    
 
 //{ Driver Code Starts.
-class LinkedList{
-    
-    public static void main(String[] args){
-        Scanner sc=new Scanner(System.in);
-        int t=sc.nextInt();
-        while(t-->0)
-        {
-            int n=sc.nextInt();
-            Node head = new Node(sc.nextInt());
+
+class LinkedList {
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int t = Integer.parseInt(br.readLine());
+        while (t-- > 0) {
+            ArrayList<Integer> arr = new ArrayList<>();
+            String input = br.readLine();
+            StringTokenizer st = new StringTokenizer(input);
+            while (st.hasMoreTokens()) {
+                arr.add(Integer.parseInt(st.nextToken()));
+            }
+            Node head = new Node(arr.get(0));
             Node tail = head;
-            for(int i=0; i<n-1; i++)
-            {
-                tail.next = new Node(sc.nextInt());
+            for (int i = 1; i < arr.size(); ++i) {
+                tail.next = new Node(arr.get(i));
                 tail = tail.next;
             }
-            
             Solution ob = new Solution();
             System.out.println(ob.getCount(head));
         }
     }
-   
-    
-    
-    
 }
-
 
 // } Driver Code Ends
